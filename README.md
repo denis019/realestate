@@ -10,9 +10,9 @@
 - Docker
 
 # Installation
-```git clone git@github.com:denis019/realestate.git```
-```cd realestate```
-```./Docker/setup.sh```
+- ```git clone git@github.com:denis019/realestate.git```
+- ```cd realestate```
+- ```./Docker/setup.sh```
 
 # Import Ads
 ```docker exec real_estate_php_fpm php artisan ads:migrate```
