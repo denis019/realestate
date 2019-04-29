@@ -8,11 +8,13 @@
 
 # Requirements
 - Docker
+- Ports 3306, 80, 443, 6379 should be available on your host machine, stop your local mysql, nginx, redis
 
 # Installation
 - ```git clone git@github.com:denis019/realestate.git```
 - ```cd realestate```
 - ```./Docker/setup.sh```
+- Update your hosts file ```127.0.0.1 api.realestate.test```
 
 # Import Ads
 ```docker exec real_estate_php_fpm php artisan ads:migrate```
