@@ -1,0 +1,68 @@
+version: '3.7'
+
+services:
+
+### php-fpm Server #########################################
+  real_estate_php_fpm:
+    container_name: real_estate_php_fpm
+    build:
+      context: ./php/dev
+    environment:
+      XDEBUG_CONFIG: remote_host=172.17.0.1
+    volumes:
+      - ../:/var/www/real-estate
+    networks:
+      - real_estate_network
+
+### NGINX Server #########################################
+  real_estate_nginx:
+    container_name: real_estate_nginx
+    build:
+      context: ./nginx/dev
+    volumes:
+      - ../:/var/www/real-estate/
+      - ./nginx/dev/config/api.realestate.test.conf:/etc/nginx/conf.d/api.realestate.test.conf
+      - ./nginx/dev/ssl:/etc/nginx/ssl/
+      - ./logs/nginx/:/var/log/nginx/
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - real_estate_php_fpm
+    networks:
+      - real_estate_network
+
+### MySQL ################################################
+  real_estate_mysql:
+    container_name: real_estate_mysql
+    build:
+      dockerfile: Dockerfile
+      context: ./mysql
+    environment:
+      - MYSQL_DATABASE=realestate
+      - MYSQL_USER=docker
+      - MYSQL_PASSWORD=docker
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./mysql/data:/data/
+    ports:
+      - "3306:3306"
+    networks:
+      - real_estate_network
+
+### Redis ################################################
+  real_estate_redis:
+    container_name: real_estate_redis
+    build:
+      context: ./redis/dev
+    volumes:
+      - ./redis/dev/data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - real_estate_network
+
+### Networks #########################################
+networks:
+  real_estate_network:
+    driver: bridge

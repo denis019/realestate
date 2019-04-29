@@ -1,0 +1,7 @@
+{
+  "name": "real-estate/ads",
+  "description": "Real estate ads",
+  "require": {
+    "rodenastyle/stream-parser": "^1.2"
+  }
+}
