@@ -29,4 +29,4 @@
 For more query params check http://docs.apiato.io/features/query-parameters
 
 # Run tests
-```./Docker/setup.sh```
+```docker exec real_estate_php_fpm ./vendor/bin/phpunit```
